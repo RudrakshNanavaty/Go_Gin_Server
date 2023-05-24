@@ -1,22 +1,21 @@
 package main
 
 import (
-	// route handler
-	"web-server/routes"
-
-	// The Gin web framework
-	"github.com/gin-gonic/gin"
+	userDatabase "web-server/database/users"
+	userRouter "web-server/routes/users"
+	userUseCase "web-server/usecases/user"
 )
 
 func main() {
-	// initialise gin Engine
-	router := gin.Default() // a gin router to handle requests
+	// Initialize repository
+	userDB := userDatabase.NewUserDB()
 
-	// request handlers
-	router.GET("/people", routes.GetPeople)
-	router.POST("/people", routes.PostPeople)
-	router.GET("/people/:id", routes.GetPersonByID)
+	// Initialize use case
+	userUC := userUseCase.NewUserUseCase(userDB)
 
-	// Listen at http://localhost:8080
+	// Set up router
+	router := userRouter.SetupRouter(userUC)
+
+	// Run the server
 	router.Run(":8080")
 }

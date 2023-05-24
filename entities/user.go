@@ -1,7 +1,7 @@
 package entities
 
 // data definitions
-type Person struct {
-	ID   string `json:"id"`
+type User struct {
+	ID   int `json:"id"`
 	Name string `json:"name"`
 }
